@@ -7,6 +7,11 @@ var stringifyFile;
 
 app.use(bodyParser.json());
 
+fs.readFile('./test.json', 'utf-8', function(err, data){
+	if (err) throw err;
+	stringifyFile=data;
+	console.log(stringifyFile);
+});
 
 app.get('/getNote', function(req, res) {
     fs.readFile('./test.json', 'utf8', function(err, data) {
@@ -22,11 +27,16 @@ app.post('/updateNote/:note', function(req, res) {
     stringifyFile = JSON.stringify(parsedFile);
     
     fs.writeFile('./test.json', stringifyFile, function(err) {
-        If (err) throw err;
+        if (err) throw err;
         console.log('file updated');
         });
+        res.send('Zawartość test.json po dodaniu notatki: ' + stringifyFile);
     }
 );
 
 
-app.listen(3000);
+var server= app.listen(3000);
+
+app.use(function(req, res, next){
+	res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego czego żądasz :-(')
+});
