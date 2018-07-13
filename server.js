@@ -23,7 +23,7 @@ app.get('/getNote', function(req, res) {
 
 app.post('/updateNote/:note', function(req, res) {
     parsedFile = JSON.parse(stringifyFile);
-    parserFile.note = req.params.note;
+    parsedFile.note = req.params.note;
     stringifyFile = JSON.stringify(parsedFile);
     
     fs.writeFile('./test.json', stringifyFile, function(err) {
